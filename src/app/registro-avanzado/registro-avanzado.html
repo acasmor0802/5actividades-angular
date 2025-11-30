@@ -1,0 +1,141 @@
+<div class="container">
+  <h2>🔐 Registro Avanzado con Validación Asincrónica</h2>
+  <p class="subtitle">Actividad 4: Validadores Asíncronos</p>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Campo Username -->
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input 
+        type="text" 
+        id="username"
+        formControlName="username"
+        class="form-control"
+        placeholder="Ej: usuario123">
+      
+      <!-- Indicador de carga -->
+      <div class="loading" *ngIf="mostrarCargando('username')">
+        ⏳ Verificando disponibilidad...
+      </div>
+      
+      <!-- Errores de validación -->
+      <div class="error" *ngIf="validarCampo('username')">
+        <small *ngIf="registroForm.get('username')?.errors?.['required']">⚠️ Requerido</small>
+        <small *ngIf="registroForm.get('username')?.errors?.['minlength']">⚠️ Mínimo 3 caracteres</small>
+        <small *ngIf="registroForm.get('username')?.errors?.['usernameReservado']">
+          ⚠️ Username no disponible (reservado para administradores)
+        </small>
+      </div>
+
+      <!-- Mensaje de éxito -->
+      <div class="success" *ngIf="registroForm.get('username')?.valid && registroForm.get('username')?.touched">
+        <small>✅ Username disponible</small>
+      </div>
+    </div>
+
+    <!-- Campo Email -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email"
+        formControlName="email"
+        class="form-control"
+        placeholder="ejemplo@correo.com">
+      
+      <!-- Indicador de carga -->
+      <div class="loading" *ngIf="mostrarCargando('email')">
+        ⏳ Verificando disponibilidad del email...
+      </div>
+      
+      <!-- Errores de validación -->
+      <div class="error" *ngIf="validarCampo('email')">
+        <small *ngIf="registroForm.get('email')?.errors?.['required']">⚠️ Requerido</small>
+        <small *ngIf="registroForm.get('email')?.errors?.['email']">⚠️ Email inválido</small>
+        <small *ngIf="registroForm.get('email')?.errors?.['emailExiste']">
+          ⚠️ Este email ya está registrado
+        </small>
+      </div>
+
+      <!-- Mensaje de éxito -->
+      <div class="success" *ngIf="registroForm.get('email')?.valid && registroForm.get('email')?.touched">
+        <small>✅ Email disponible</small>
+      </div>
+
+      <!-- Info adicional -->
+      <div class="info" *ngIf="registroForm.get('email')?.pending">
+        🔍 Validando disponibilidad del email...
+      </div>
+    </div>
+
+    <!-- Campo Contraseña -->
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input 
+        type="password" 
+        id="password"
+        formControlName="password"
+        class="form-control"
+        placeholder="Mínimo 8 caracteres">
+      
+      <div class="error" *ngIf="validarCampo('password')">
+        <small *ngIf="registroForm.get('password')?.errors?.['required']">⚠️ Requerida</small>
+        <small *ngIf="registroForm.get('password')?.errors?.['minlength']">⚠️ Mínimo 8 caracteres</small>
+      </div>
+
+      <!-- Indicador de fortaleza -->
+      <div class="password-strength" *ngIf="registroForm.get('password')?.value">
+        <div class="strength-bar" 
+             [class.weak]="registroForm.get('password')?.value.length < 8"
+             [class.medium]="registroForm.get('password')?.value.length >= 8 && registroForm.get('password')?.value.length < 12"
+             [class.strong]="registroForm.get('password')?.value.length >= 12">
+        </div>
+        <small>
+          Fortaleza: 
+          <span *ngIf="registroForm.get('password')?.value.length < 8">Débil 🔴</span>
+          <span *ngIf="registroForm.get('password')?.value.length >= 8 && registroForm.get('password')?.value.length < 12">Media 🟡</span>
+          <span *ngIf="registroForm.get('password')?.value.length >= 12">Fuerte 🟢</span>
+        </small>
+      </div>
+    </div>
+
+    <!-- Campo Términos -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input 
+          type="checkbox" 
+          formControlName="terminos">
+        Acepto los términos y condiciones
+      </label>
+      
+      <div class="error" *ngIf="registroForm.get('terminos')?.invalid && registroForm.get('terminos')?.touched">
+        <small>⚠️ Debes aceptar los términos</small>
+      </div>
+    </div>
+
+    <!-- Botón Submit -->
+    <button 
+      type="submit" 
+      [disabled]="registroForm.invalid || enviando || registroForm.pending"
+      class="btn-submit">
+      <span *ngIf="!enviando">✨ Crear Cuenta</span>
+      <span *ngIf="enviando">⏳ Registrando...</span>
+    </button>
+
+    <!-- Info de validación en progreso -->
+    <div class="validation-info" *ngIf="registroForm.pending">
+      <p>🔄 Validando información con el servidor...</p>
+    </div>
+  </form>
+
+  <!-- Panel informativo -->
+  <div class="info-panel">
+    <h3>ℹ️ Información de Validación</h3>
+    <ul>
+      <li>📧 <strong>Emails registrados:</strong> admin@example.com, usuario@example.com, test@example.com</li>
+      <li>🚫 <strong>Usernames reservados:</strong> Los que empiezan con "admin"</li>
+      <li>⏱️ <strong>Tiempo de validación:</strong> 0.8-1 segundo (simulado)</li>
+    </ul>
+  </div>
+</div>

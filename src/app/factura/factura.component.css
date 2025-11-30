@@ -1,0 +1,304 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+h3 {
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 0.5rem;
+}
+
+h4 {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* ============= FORMULARIO ============= */
+form {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: white;
+}
+
+/* ============= HEADER DE FACTURA ============= */
+.factura-header {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 2px solid #667eea;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ============= SECCIÓN DE DETALLES ============= */
+.detalles-section {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.detalle-item {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+}
+
+.detalle-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1fr 1.5fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.subtotal-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subtotal-value {
+  padding: 0.85rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* ============= ESTADO VACÍO ============= */
+.empty-detalles {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  border: 2px dashed #ddd;
+  margin-bottom: 1rem;
+}
+
+.empty-detalles p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.empty-detalles p:first-child {
+  font-weight: 600;
+  color: #555;
+}
+
+/* ============= MENSAJES DE ERROR ============= */
+.error {
+  margin-top: 0.5rem;
+}
+
+.error small {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* ============= BOTONES ============= */
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-add {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.btn-add:hover {
+  background-color: #229954;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.btn-delete-small {
+  padding: 0.25rem 0.75rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.btn-delete-small:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* ============= RESUMEN ============= */
+.resumen {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 2px solid #667eea;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.1rem;
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+}
+
+.resumen-item.total {
+  border-top: 3px solid #667eea;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  font-size: 1.4rem;
+  color: #667eea;
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  form {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .detalle-row {
+    grid-template-columns: 1fr;
+  }
+
+  .factura-header,
+  .detalles-section,
+  .resumen {
+    padding: 1rem;
+  }
+
+  .resumen-item {
+    font-size: 1rem;
+  }
+
+  .resumen-item.total {
+    font-size: 1.2rem;
+  }
+}

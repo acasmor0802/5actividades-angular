@@ -1,0 +1,188 @@
+<div class="container">
+  <h2>👤 Perfil de Usuario Completo</h2>
+  <p class="subtitle">Actividad 5: FormGroups Anidados</p>
+
+  <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+    
+    <!-- ============================================ -->
+    <!-- SECCIÓN: INFORMACIÓN PERSONAL (FormGroup anidado) -->
+    <!-- ============================================ -->
+    <div formGroupName="informacionPersonal" class="section">
+      <h3>📋 Información Personal</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input 
+            type="text" 
+            id="nombre"
+            formControlName="nombre"
+            class="form-control"
+            placeholder="Juan">
+          
+          <div class="error" *ngIf="informacionPersonal.get('nombre')?.invalid && informacionPersonal.get('nombre')?.touched">
+            <small>⚠️ Nombre requerido (mínimo 2 caracteres)</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input 
+            type="text" 
+            id="apellido"
+            formControlName="apellido"
+            class="form-control"
+            placeholder="Pérez">
+          
+          <div class="error" *ngIf="informacionPersonal.get('apellido')?.invalid && informacionPersonal.get('apellido')?.touched">
+            <small>⚠️ Apellido requerido (mínimo 2 caracteres)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+          <input 
+            type="date" 
+            id="fechaNacimiento"
+            formControlName="fechaNacimiento"
+            class="form-control">
+          
+          <div class="info" *ngIf="informacionPersonal.get('fechaNacimiento')?.value">
+            🎂 Edad: {{ calcularEdad() }} años
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input 
+            type="tel" 
+            id="telefono"
+            formControlName="telefono"
+            placeholder="612345678"
+            class="form-control">
+          
+          <div class="error" *ngIf="informacionPersonal.get('telefono')?.invalid && informacionPersonal.get('telefono')?.touched">
+            <small>⚠️ Teléfono inválido (mínimo 9 dígitos)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SECCIÓN: DIRECCIONES (FormArray con FormGroups) -->
+    <!-- ============================================ -->
+    <div class="section">
+      <h3>🏠 Direcciones ({{ direcciones.length }})</h3>
+
+      <div formArrayName="direcciones">
+        <div *ngFor="let direccion of direcciones.controls; let i = index" [formGroupName]="i" class="direccion-item">
+          
+          <div class="direccion-header">
+            <h4>📍 Dirección {{ i + 1 }}</h4>
+            <button 
+              type="button" 
+              (click)="eliminarDireccion(i)"
+              class="btn-delete-small"
+              [disabled]="direcciones.length === 1"
+              title="Eliminar dirección">
+              🗑️ Eliminar
+            </button>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tipo:</label>
+              <select formControlName="tipo" class="form-control">
+                <option *ngFor="let tipo of tiposDireccion" [value]="tipo">
+                  {{ tipo }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>País:</label>
+              <input 
+                type="text" 
+                formControlName="pais"
+                class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Calle y Número:</label>
+            <input 
+              type="text" 
+              formControlName="calle"
+              placeholder="Calle Principal 123"
+              class="form-control">
+            
+            <div class="error" *ngIf="direccion.get('calle')?.invalid && direccion.get('calle')?.touched">
+              <small>⚠️ Mínimo 5 caracteres</small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Ciudad:</label>
+              <input 
+                type="text" 
+                formControlName="ciudad"
+                placeholder="Madrid"
+                class="form-control">
+              
+              <div class="error" *ngIf="direccion.get('ciudad')?.invalid && direccion.get('ciudad')?.touched">
+                <small>⚠️ Mínimo 2 caracteres</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Código Postal:</label>
+              <input 
+                type="text" 
+                formControlName="codigoPostal"
+                placeholder="28001"
+                maxlength="5"
+                class="form-control">
+              
+              <div class="error" *ngIf="direccion.get('codigoPostal')?.invalid && direccion.get('codigoPostal')?.touched">
+                <small>⚠️ Formato: 5 dígitos (Ej: 28001)</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button 
+        type="button" 
+        (click)="agregarDireccion()"
+        class="btn-add">
+        ➕ Agregar Otra Dirección
+      </button>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- RESUMEN DEL PERFIL -->
+    <!-- ============================================ -->
+    <div class="resumen" *ngIf="generarResumen()">
+      <h3>📊 Resumen del Perfil</h3>
+      <div class="resumen-content">
+        <p>{{ generarResumen() }}</p>
+      </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button 
+      type="submit" 
+      [disabled]="perfilForm.invalid"
+      class="btn-submit">
+      💾 Guardar Perfil Completo
+    </button>
+  </form>
+
+  <!-- Estado del formulario (para debugging) -->
+  <div class="form-status" *ngIf="!perfilForm.valid">
+    <p>⚠️ Completa todos los campos requeridos antes de guardar</p>
+  </div>
+</div>

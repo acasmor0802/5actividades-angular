@@ -1,0 +1,173 @@
+<div class="container">
+  <h2>🧾 Generador de Facturas</h2>
+  <p class="subtitle">Actividad 3: FormArray y Validadores Personalizados</p>
+
+  <form [formGroup]="facturaForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Información de la Factura -->
+    <div class="factura-header">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="numeroFactura">Número de Factura:</label>
+          <input 
+            type="text" 
+            id="numeroFactura"
+            formControlName="numeroFactura"
+            placeholder="FAC-123456"
+            class="form-control">
+          
+          <div class="error" *ngIf="facturaForm.get('numeroFactura')?.invalid && facturaForm.get('numeroFactura')?.touched">
+            <small *ngIf="facturaForm.get('numeroFactura')?.errors?.['required']">⚠️ Requerido</small>
+            <small *ngIf="facturaForm.get('numeroFactura')?.errors?.['formatoFactura']">
+              ⚠️ Formato: FAC-XXXXXX (6 dígitos)
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha:</label>
+          <input 
+            type="date" 
+            id="fecha"
+            formControlName="fecha"
+            class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cliente">Cliente:</label>
+        <input 
+          type="text" 
+          id="cliente"
+          formControlName="cliente"
+          placeholder="Nombre del cliente"
+          class="form-control">
+        
+        <div class="error" *ngIf="facturaForm.get('cliente')?.invalid && facturaForm.get('cliente')?.touched">
+          <small *ngIf="facturaForm.get('cliente')?.errors?.['required']">⚠️ Requerido</small>
+          <small *ngIf="facturaForm.get('cliente')?.errors?.['minlength']">⚠️ Mínimo 3 caracteres</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalles de Factura -->
+    <div class="detalles-section">
+      <h3>📝 Detalles de Factura</h3>
+
+      <div formArrayName="detalles">
+        <div *ngFor="let detalle of detalles.controls; let i = index" [formGroupName]="i" class="detalle-item">
+          
+          <div class="detalle-header">
+            <h4>Línea {{ i + 1 }}</h4>
+            <button 
+              type="button" 
+              (click)="eliminarDetalle(i)"
+              class="btn-delete-small"
+              title="Eliminar línea">
+              ❌
+            </button>
+          </div>
+
+          <div class="detalle-row">
+            <div class="form-group">
+              <label>Producto:</label>
+              <input 
+                type="text" 
+                formControlName="producto"
+                placeholder="Nombre del producto"
+                class="form-control">
+              <div class="error" *ngIf="detalle.get('producto')?.invalid && detalle.get('producto')?.touched">
+                <small>⚠️ Requerido</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Cantidad:</label>
+              <input 
+                type="number" 
+                formControlName="cantidad"
+                min="1"
+                class="form-control">
+              <div class="error" *ngIf="detalle.get('cantidad')?.invalid && detalle.get('cantidad')?.touched">
+                <small>⚠️ Mínimo 1</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Precio Unitario (€):</label>
+              <input 
+                type="number" 
+                formControlName="precioUnitario"
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                class="form-control">
+              <div class="error" *ngIf="detalle.get('precioUnitario')?.invalid && detalle.get('precioUnitario')?.touched">
+                <small>⚠️ Mayor a 0</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Descuento (%):</label>
+              <input 
+                type="number" 
+                formControlName="descuento"
+                min="0"
+                max="100"
+                placeholder="0"
+                class="form-control">
+              <div class="error" *ngIf="detalle.get('descuento')?.invalid && detalle.get('descuento')?.touched">
+                <small>⚠️ 0-100</small>
+              </div>
+            </div>
+
+            <div class="form-group subtotal-display">
+              <label>Subtotal:</label>
+              <div class="subtotal-value">
+                {{ calcularSubtotalDetalle(detalle) | currency:'EUR':'symbol':'1.2-2' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje cuando no hay detalles -->
+        <div class="empty-detalles" *ngIf="detalles.length === 0">
+          <p>📭 No hay líneas de factura agregadas.</p>
+          <p>Haz clic en "Agregar Detalle" para comenzar.</p>
+        </div>
+      </div>
+
+      <button 
+        type="button" 
+        (click)="agregarDetalle()"
+        class="btn-add">
+        ➕ Agregar Detalle
+      </button>
+    </div>
+
+    <!-- Resumen de Totales -->
+    <div class="resumen" *ngIf="detalles.length > 0">
+      <h3>💰 Resumen</h3>
+      <div class="resumen-item">
+        <span>Subtotal:</span>
+        <span>{{ calcularSubtotal() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      </div>
+      <div class="resumen-item">
+        <span>IVA (21%):</span>
+        <span>{{ calcularIVA() | currency:'EUR':'symbol':'1.2-2' }}</span>
+      </div>
+      <div class="resumen-item total">
+        <span><strong>TOTAL:</strong></span>
+        <span><strong>{{ calcularTotal() | currency:'EUR':'symbol':'1.2-2' }}</strong></span>
+      </div>
+    </div>
+
+    <!-- Botón Guardar -->
+    <button 
+      type="submit" 
+      [disabled]="facturaForm.invalid || detalles.length === 0"
+      class="btn-submit">
+      💾 Guardar Factura
+    </button>
+  </form>
+</div>

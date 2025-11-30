@@ -1,0 +1,264 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+h3 {
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* ============= FORMULARIO ============= */
+form {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: white;
+}
+
+/* ============= MENSAJES ============= */
+.error {
+  margin-top: 0.5rem;
+}
+
+.error small {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.success {
+  margin-top: 0.5rem;
+}
+
+.success small {
+  color: #27ae60;
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 600;
+}
+
+.info {
+  margin-top: 0.5rem;
+  color: #3498db;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.loading {
+  margin-top: 0.5rem;
+  color: #f39c12;
+  font-size: 0.875rem;
+  font-style: italic;
+  font-weight: 600;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ============= INDICADOR DE FORTALEZA DE CONTRASEÑA ============= */
+.password-strength {
+  margin-top: 0.75rem;
+}
+
+.strength-bar {
+  height: 6px;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.strength-bar.weak {
+  width: 33%;
+  background-color: #e74c3c;
+}
+
+.strength-bar.medium {
+  width: 66%;
+  background-color: #f39c12;
+}
+
+.strength-bar.strong {
+  width: 100%;
+  background-color: #27ae60;
+}
+
+.password-strength small {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* ============= CHECKBOX ============= */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 6px;
+  border: 2px solid #ddd;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 0.75rem;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+/* ============= BOTONES ============= */
+.btn-submit {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ============= INFO DE VALIDACIÓN ============= */
+.validation-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  border-radius: 4px;
+}
+
+.validation-info p {
+  margin: 0;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+/* ============= PANEL INFORMATIVO ============= */
+.info-panel {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-radius: 8px;
+  border: 2px solid #667eea;
+}
+
+.info-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.info-panel li {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  border-radius: 6px;
+  border-left: 4px solid #667eea;
+  font-size: 0.95rem;
+}
+
+.info-panel li:last-child {
+  margin-bottom: 0;
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  form {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .info-panel {
+    padding: 1rem;
+  }
+
+  .info-panel li {
+    font-size: 0.875rem;
+  }
+}
